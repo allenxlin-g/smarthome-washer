@@ -23,7 +23,7 @@ const util = require('util');
 const admin = require('firebase-admin');
 // Initialize Firebase
 admin.initializeApp();
-const firebaseRef = admin.database().ref('/');
+const getFirebaseRef = () => admin.database().ref('/');
 // Initialize Homegraph
 const auth = new google.auth.GoogleAuth({
   scopes: ['https://www.googleapis.com/auth/homegraph'],
@@ -135,7 +135,7 @@ app.onSync((body) => {
 });
 
 const queryFirebase = async (deviceId) => {
-  const snapshot = await firebaseRef.child(deviceId).once('value');
+  const snapshot = await getFirebaseRef().child(deviceId).once('value');
   const snapshotVal = snapshot.val();
   return {
     on: snapshotVal.OnOff.on,
@@ -189,20 +189,20 @@ const updateDevice = async (execution, deviceId) => {
   switch (command) {
     case 'action.devices.commands.OnOff':
       state = {on: params.on};
-      ref = firebaseRef.child(deviceId).child('OnOff');
+      ref = getFirebaseRef().child(deviceId).child('OnOff');
       break;
     case 'action.devices.commands.StartStop':
       state = params.start
       ? {isRunning: true, isPaused: false}
       : {isRunning: false, isPaused: false};
-      ref = firebaseRef.child(deviceId).child('StartStop');
+      ref = getFirebaseRef().child(deviceId).child('StartStop');
       break;
     case 'action.devices.commands.PauseUnpause':
       const data = await queryDevice(deviceId);
       state = (data.isPaused === false && data.isRunning === false)
         ? {isRunning: false, isPaused: false}
         : {isRunning: !params.pause, isPaused: params.pause};
-      ref = firebaseRef.child(deviceId).child('StartStop');
+      ref = getFirebaseRef().child(deviceId).child('StartStop');
       break;
   }
 
