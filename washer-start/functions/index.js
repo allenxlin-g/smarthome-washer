@@ -16,9 +16,9 @@
 
 'use strict';
 
-const { onRequest } = require("firebase-functions/v2/https");
-const { onValueWritten } = require("firebase-functions/v2/database");
-const logger = require("firebase-functions/logger");
+const {onRequest} = require('firebase-functions/v2/https');
+const {onValueWritten} = require('firebase-functions/v2/database');
+const logger = require('firebase-functions/logger');
 const {smarthome} = require('actions-on-google');
 const {google} = require('googleapis');
 const util = require('util');
@@ -156,7 +156,7 @@ exports.requestsync = onRequest(async (request, response) => {
  * Send a REPORT STATE call to the homegraph when data for any device id
  * has been changed.
  */
-exports.reportstate = onValueWritten("{deviceId}", async (event) => {
+exports.reportstate = onValueWritten('{deviceId}', async (event) => {
   logger.info('Firebase write event triggered Report State');
 
   // TODO: Get latest state and call HomeGraph API
