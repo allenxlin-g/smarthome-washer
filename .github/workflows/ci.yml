@@ -44,5 +44,5 @@ jobs:
       working-directory: washer-start/functions
 
     - name: Run tests with Emulator
-      run: npx firebase emulators:exec "npm --prefix functions test"
+      run: npx -p firebase-tools firebase emulators:exec "npm --prefix functions test"
       working-directory: washer-start
