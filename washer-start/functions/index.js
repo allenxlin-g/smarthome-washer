@@ -109,7 +109,7 @@ app.onSync((body) => {
 });
 
 const queryFirebase = async (deviceId) => {
-  const snapshot = await firebaseRef.child(deviceId).once('value');
+  const snapshot = await getFirebaseRef().child(deviceId).once('value');
   const snapshotVal = snapshot.val();
   // TODO: Define device states to return
   return {};

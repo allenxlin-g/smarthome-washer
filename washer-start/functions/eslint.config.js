@@ -1,3 +1,4 @@
+const globals = require('globals');
 const googleConfig = require('eslint-config-google');
 
 const rules = {...googleConfig.rules};
@@ -11,14 +12,7 @@ module.exports = [
       ecmaVersion: 2022,
       sourceType: 'script',
       globals: {
-        // node globals
-        require: 'readonly',
-        exports: 'readonly',
-        module: 'readonly',
-        console: 'readonly',
-        process: 'readonly',
-        __dirname: 'readonly',
-        __filename: 'readonly',
+        ...globals.node,
       },
     },
     rules: {
